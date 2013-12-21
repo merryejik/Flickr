@@ -8,6 +8,8 @@
 
 #import "CoreDataTableViewController.h"
 
-@interface TopPlacesTVC : CoreDataTableViewController
+@interface TopPlacesTVC : UITableViewController
+
+@property (strong, nonatomic) NSArray *places;
 
 @end

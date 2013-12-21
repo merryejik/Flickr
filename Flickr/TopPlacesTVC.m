@@ -35,8 +35,14 @@
     NSDictionary *topPlacesData = [NSJSONSerialization JSONObjectWithData:topPlacesJSONData
                                                             options:0 error:&error];
     NSLog(@"%@", topPlacesData);
-    NSArray *places = [topPlacesData valueForKeyPath:@"places.place"];
-   }
+    self.places = [topPlacesData valueForKeyPath:FLICKR_RESULTS_PLACES];
+}
+
+-(void)setPlaces:(NSArray *)places
+{
+    _places = places;
+   // [self.tableView reloadData];
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -44,4 +50,26 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+#pragma mark - UITableViewController
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    //return [self.places count];
+    return 100;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"Flickr Place";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    cell.textLabel.text = [self.places[indexPath.row] valueForKey:FLICKR_PLACE_NAME];
+    cell.detailTextLabel.text = @"Bye";
+    return cell;
+}
 @end

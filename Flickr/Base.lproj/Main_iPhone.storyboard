@@ -8,14 +8,14 @@
         <scene sceneID="Bau-td-rHB">
             <objects>
                 <tabBarController definesPresentationContext="YES" id="BGY-lI-zLI" sceneMemberID="viewController">
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="L5n-cw-OKA">
                         <rect key="frame" x="129" y="330" width="163" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="jun-IS-Yru" kind="relationship" relationship="viewControllers" id="5im-y6-TQj"/>
+                        <segue destination="DFD-St-OFx" kind="relationship" relationship="viewControllers" id="5im-y6-TQj"/>
                         <segue destination="a5n-UU-MKQ" kind="relationship" relationship="viewControllers" id="PPC-zt-f4K"/>
                     </connections>
                 </tabBarController>
@@ -32,11 +32,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="NKq-aP-zhI" detailTextLabel="SFs-01-Lnn" style="IBUITableViewCellStyleSubtitle" id="bXr-Km-62f">
-                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="Flickr Place" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Flickr Place" textLabel="NKq-aP-zhI" detailTextLabel="SFs-01-Lnn" style="IBUITableViewCellStyleSubtitle" id="bXr-Km-62f">
+                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bXr-Km-62f" id="98e-XD-c3F">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="NKq-aP-zhI">
@@ -62,11 +62,11 @@
                             <outlet property="delegate" destination="jun-IS-Yru" id="vIr-8B-N0S"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" title="Top Places" id="ZZC-rt-gyY"/>
+                    <navigationItem key="navigationItem" title="Top Places" id="4aW-6l-MPm"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2zW-WN-E48" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="393" y="-326"/>
+            <point key="canvasLocation" x="919" y="-326"/>
         </scene>
         <!--View Controller - Recents-->
         <scene sceneID="cp9-Gd-rq9">
@@ -86,6 +86,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sUY-kg-C8V" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="375" y="335"/>
+        </scene>
+        <!--Navigation Controller - Top Places-->
+        <scene sceneID="6Th-jB-NEW">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="DFD-St-OFx" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Top Places" id="ZZC-rt-gyY"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="4eN-n7-hbg">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="jun-IS-Yru" kind="relationship" relationship="rootViewController" id="Tmv-dj-E3O"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mX9-wx-6T8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="393" y="-326"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

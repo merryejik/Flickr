@@ -26,9 +26,10 @@
 		FF5474D01865839500A51E91 /* CoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF5474CF1865839500A51E91 /* CoreDataTableViewController.m */; };
 		FF5474D31865C71F00A51E91 /* TopPlacesTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FF5474D21865C71F00A51E91 /* TopPlacesTVC.m */; };
 		FF5474D61866BB9700A51E91 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FF5474D41866BB9700A51E91 /* Model.xcdatamodeld */; };
-		FF5474DD1866BDE400A51E91 /* Country.m in Sources */ = {isa = PBXBuildFile; fileRef = FF5474DC1866BDE400A51E91 /* Country.m */; };
-		FF5474E01866BDE500A51E91 /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = FF5474DF1866BDE500A51E91 /* Place.m */; };
 		FF54757D1866FD3800A51E91 /* ManagedDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = FF54757C1866FD3800A51E91 /* ManagedDocument.m */; };
+		FFEB7025186790FE00D361BE /* Place+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = FFEB7024186790FE00D361BE /* Place+Create.m */; };
+		FFEB7028186793C600D361BE /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = FFEB7027186793C600D361BE /* Place.m */; };
+		FFEB702B186793C600D361BE /* Country.m in Sources */ = {isa = PBXBuildFile; fileRef = FFEB702A186793C600D361BE /* Country.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,13 +71,15 @@
 		FF5474D11865C71F00A51E91 /* TopPlacesTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopPlacesTVC.h; sourceTree = "<group>"; };
 		FF5474D21865C71F00A51E91 /* TopPlacesTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopPlacesTVC.m; sourceTree = "<group>"; };
 		FF5474D51866BB9700A51E91 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
-		FF5474DB1866BDE400A51E91 /* Country.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Country.h; path = Model/Country.h; sourceTree = "<group>"; };
-		FF5474DC1866BDE400A51E91 /* Country.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Country.m; path = Model/Country.m; sourceTree = "<group>"; };
-		FF5474DE1866BDE500A51E91 /* Place.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Place.h; path = Model/Place.h; sourceTree = "<group>"; };
-		FF5474DF1866BDE500A51E91 /* Place.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Place.m; path = Model/Place.m; sourceTree = "<group>"; };
 		FF54757B1866FD3800A51E91 /* ManagedDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManagedDocument.h; sourceTree = "<group>"; };
 		FF54757C1866FD3800A51E91 /* ManagedDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManagedDocument.m; sourceTree = "<group>"; };
 		FF54757E1867371400A51E91 /* DatabaseAvailability.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DatabaseAvailability.h; sourceTree = "<group>"; };
+		FFEB7023186790FE00D361BE /* Place+Create.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Place+Create.h"; path = "Model/Place+Create.h"; sourceTree = "<group>"; };
+		FFEB7024186790FE00D361BE /* Place+Create.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Place+Create.m"; path = "Model/Place+Create.m"; sourceTree = "<group>"; };
+		FFEB7026186793C600D361BE /* Place.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Place.h; path = Model/Place.h; sourceTree = "<group>"; };
+		FFEB7027186793C600D361BE /* Place.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Place.m; path = Model/Place.m; sourceTree = "<group>"; };
+		FFEB7029186793C600D361BE /* Country.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Country.h; path = Model/Country.h; sourceTree = "<group>"; };
+		FFEB702A186793C600D361BE /* Country.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Country.m; path = Model/Country.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,10 +211,12 @@
 			isa = PBXGroup;
 			children = (
 				FF5474D41866BB9700A51E91 /* Model.xcdatamodeld */,
-				FF5474DE1866BDE500A51E91 /* Place.h */,
-				FF5474DF1866BDE500A51E91 /* Place.m */,
-				FF5474DB1866BDE400A51E91 /* Country.h */,
-				FF5474DC1866BDE400A51E91 /* Country.m */,
+				FFEB7026186793C600D361BE /* Place.h */,
+				FFEB7027186793C600D361BE /* Place.m */,
+				FFEB7029186793C600D361BE /* Country.h */,
+				FFEB702A186793C600D361BE /* Country.m */,
+				FFEB7023186790FE00D361BE /* Place+Create.h */,
+				FFEB7024186790FE00D361BE /* Place+Create.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -319,11 +324,12 @@
 				FF5474A11865814600A51E91 /* AppDelegate.m in Sources */,
 				FF5474D61866BB9700A51E91 /* Model.xcdatamodeld in Sources */,
 				FF5474CC1865835300A51E91 /* FlickrFetcher.m in Sources */,
+				FFEB7028186793C600D361BE /* Place.m in Sources */,
 				FF54749D1865814600A51E91 /* main.m in Sources */,
+				FFEB7025186790FE00D361BE /* Place+Create.m in Sources */,
+				FFEB702B186793C600D361BE /* Country.m in Sources */,
 				FF54757D1866FD3800A51E91 /* ManagedDocument.m in Sources */,
-				FF5474E01866BDE500A51E91 /* Place.m in Sources */,
 				FF5474D01865839500A51E91 /* CoreDataTableViewController.m in Sources */,
-				FF5474DD1866BDE400A51E91 /* Country.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

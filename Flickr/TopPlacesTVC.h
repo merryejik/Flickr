@@ -12,5 +12,6 @@
 
 @property (strong, nonatomic) NSArray *places;
 @property (strong, nonatomic) NSDictionary *placesByCountry; //of Place by CountryName
+@property (strong, nonatomic) NSManagedObjectContext *managedContext;
 
 @end

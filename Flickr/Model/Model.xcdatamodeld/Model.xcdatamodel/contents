@@ -6,11 +6,12 @@
     </entity>
     <entity name="Place" representedClassName="Place" syncable="YES">
         <attribute name="details" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="country" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Country" inverseName="places" inverseEntity="Country" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Place" positionX="160" positionY="192" width="128" height="88"/>
         <element name="Country" positionX="-72" positionY="207" width="128" height="73"/>
+        <element name="Place" positionX="160" positionY="192" width="128" height="103"/>
     </elements>
 </model>

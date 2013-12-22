@@ -12,5 +12,6 @@
 #define DatabaseAvailabilityNotification @"DatabaseAvailabilityNotification"
 #define DatabaseAvailabilityContext @"Context"
 
-
+#define PlaceEntry @"Place"
+#define CountryEntry @"Country"
 #endif

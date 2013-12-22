@@ -9,12 +9,24 @@
 #import "TopPlacesTVC.h"
 #import "FlickrFetcher.h"
 #import "Place.h"
+#import "Place+Create.h"
+#import "DatabaseAvailability.h"
 
 @interface TopPlacesTVC ()
 
 @end
 
 @implementation TopPlacesTVC
+
+-(void)awakeFromNib
+{
+    [[NSNotificationCenter defaultCenter] addObserverForName:DatabaseAvailabilityNotification object:nil queue:nil usingBlock:^(NSNotification *notification)
+     {
+         self.managedContext = notification.userInfo[DatabaseAvailabilityContext];
+         [self parsePlacesByCountries];
+         [self.tableView reloadData];
+     }];
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -35,15 +47,15 @@
     NSError *error;
     NSDictionary *topPlacesData = [NSJSONSerialization JSONObjectWithData:topPlacesJSONData
                                                             options:0 error:&error];
-    NSLog(@"%@", topPlacesData);
+
     self.places = [topPlacesData valueForKeyPath:FLICKR_RESULTS_PLACES];
 }
 
 -(void)setPlaces:(NSArray *)places
 {
     _places = places;
-    [self parsePlacesByCountries];
-    [self.tableView reloadData];
+   // [self parsePlacesByCountries];
+   // [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -71,14 +83,10 @@
         {
             [countries[countryName] addObject:place];
         }
+        Place *p = [Place placeWithFlickrData:place InManagedObjectContext:self.managedContext];
     }
-    NSLog(@"%@", countries);
+    //NSLog(@"%@", countries);
     self.placesByCountry = countries;
-}
-
--(Place *)parsePlaceDictionary:(NSDictionary *)place
-{
-    return nil;
 }
 
 #pragma mark - UITableViewController

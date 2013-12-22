@@ -21,6 +21,8 @@
     NSURL *url = [documentsDirectory URLByAppendingPathComponent:modelName];
     UIManagedDocument *document = [[UIManagedDocument alloc] initWithFileURL:url];
     
+    NSLog(@"DataBase url %@", url);
+    
     bool fileExists = [[NSFileManager defaultManager] fileExistsAtPath:[url path]];
     if (fileExists)
     {

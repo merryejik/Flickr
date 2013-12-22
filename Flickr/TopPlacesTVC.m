@@ -41,7 +41,8 @@
 -(void)setPlaces:(NSArray *)places
 {
     _places = places;
-   // [self.tableView reloadData];
+    [self parsePlacesByCountries];
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -50,26 +51,65 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)parsePlacesByCountries
+{
+    NSMutableDictionary *countries = [[NSMutableDictionary alloc] init];
+    for (NSDictionary *place in self.places)
+    {
+        NSString *placeName = [place valueForKey:FLICKR_PLACE_NAME];
+        NSRange lastComma = [placeName rangeOfString:@"," options:NSBackwardsSearch];
+        if (lastComma.location == NSNotFound) continue;
+        if (lastComma.location + 2 >= placeName.length) continue;
+        
+        NSString *countryName = [placeName substringFromIndex:lastComma.location+2];
+        if (![countries valueForKey:countryName])
+        {
+            countries[countryName] = [[NSMutableArray alloc] initWithObjects:place, nil];
+        }
+        else
+        {
+            [countries[countryName] addObject:place];
+        }
+    }
+    NSLog(@"%@", countries);
+    self.placesByCountry = countries;
+}
 
 #pragma mark - UITableViewController
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return [self.placesByCountry count];
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    //return [self.places count];
-    return 100;
+    return [[self dictionary:self.placesByCountry ValueByKeyIndex:section] count];
+}
+
+-(id)dictionary:(NSDictionary *)dictionary ValueByKeyIndex:(NSInteger)index
+{
+    NSArray *allKeys = [dictionary allKeys];
+    id keyAtIndex = allKeys[index];
+    return [dictionary valueForKey:keyAtIndex];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Flickr Place";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    cell.textLabel.text = [self.places[indexPath.row] valueForKey:FLICKR_PLACE_NAME];
+    
+    NSArray *countyPlaces = [self dictionary:self.placesByCountry ValueByKeyIndex:indexPath.section];
+    NSDictionary *place = countyPlaces[indexPath.row];
+    
+    cell.textLabel.text = [place valueForKey:FLICKR_PLACE_NAME];
     cell.detailTextLabel.text = @"Bye";
     return cell;
+}
+
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    NSArray *allKeys = [self.placesByCountry allKeys];
+    return allKeys[section];
 }
 @end

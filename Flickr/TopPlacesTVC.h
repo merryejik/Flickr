@@ -11,5 +11,6 @@
 @interface TopPlacesTVC : UITableViewController
 
 @property (strong, nonatomic) NSArray *places;
+@property (strong, nonatomic) NSDictionary *placesByCountry;
 
 @end

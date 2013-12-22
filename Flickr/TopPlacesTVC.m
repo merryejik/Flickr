@@ -8,6 +8,7 @@
 
 #import "TopPlacesTVC.h"
 #import "FlickrFetcher.h"
+#import "Place.h"
 
 @interface TopPlacesTVC ()
 
@@ -73,6 +74,11 @@
     }
     NSLog(@"%@", countries);
     self.placesByCountry = countries;
+}
+
+-(Place *)parsePlaceDictionary:(NSDictionary *)place
+{
+    return nil;
 }
 
 #pragma mark - UITableViewController

@@ -7,15 +7,36 @@
 //
 
 #import "AppDelegate.h"
+#import "ManagedDocument.h"
+#import "DatabaseAvailability.h"
 
+@interface AppDelegate ()
+
+@property (strong, nonatomic) NSManagedObjectContext *context;
+@property (strong, nonatomic) UIManagedDocument *managedDocument;
+
+@end
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    ManagedDocument *document = [[ManagedDocument alloc] init];
+    document.readyBlock = ^(NSManagedObjectContext *context)
+    {
+        [self initContext: context];
+    };
+    self.managedDocument = [document createOrOpenUIManagedDocument];
     return YES;
 }
-							
+
+-(void)initContext:(NSManagedObjectContext *)context
+{
+    self.context = context;
+    NSDictionary *userInfo = context ? @{DatabaseAvailabilityContext : context} : nil;
+    [[NSNotificationCenter defaultCenter] postNotificationName:DatabaseAvailabilityNotification object:self userInfo:userInfo];
+}
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

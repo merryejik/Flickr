@@ -9,6 +9,7 @@
 #import "TopPlacesTVC.h"
 #import "FlickrFetcher.h"
 #import "DatabaseAvailability.h"
+#import "PlacePhotosTVC.h"
 
 @interface TopPlacesTVC ()
 
@@ -130,16 +131,37 @@
     static NSString *CellIdentifier = @"Flickr Place";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    NSArray *countyPlaces = [self dictionary:self.placesByCountry ValueByKeyIndex:indexPath.section];
-    Place *place = countyPlaces[indexPath.row];
+    Place *place = [self placeByIndexPath:indexPath];
     
     cell.textLabel.text = place.name;
     cell.detailTextLabel.text = place.details;
     return cell;
 }
 
+-(Place *)placeByIndexPath:(NSIndexPath *)indexPath
+{
+    NSArray *countyPlaces = [self dictionary:self.placesByCountry ValueByKeyIndex:indexPath.section];
+    return countyPlaces[indexPath.row];
+}
+
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     return self.sortedCountryDictionaryKeys[section];
 }
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    NSLog(@"%@",segue.identifier);
+    if ([segue.identifier isEqualToString:@"Photo by Place"])
+        if ([segue.destinationViewController isKindOfClass:[PlacePhotosTVC class]])
+             {
+                 PlacePhotosTVC *photosTVC = (PlacePhotosTVC *)segue.destinationViewController;
+                 
+                 NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
+                 Place *place = [self placeByIndexPath:indexPath];
+                 
+                 photosTVC.placeName = place.name;
+             }
+}
+
 @end

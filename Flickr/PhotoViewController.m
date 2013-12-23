@@ -17,6 +17,13 @@
 
 @implementation PhotoViewController
 
+-(void)setPhotoTitle:(NSString *)photoTitle
+{
+    _photoTitle = photoTitle;
+    self.title = _photoTitle;
+    
+}
+
 -(UIImageView *)imageView
 {
     if (!_imageView)

@@ -89,9 +89,14 @@
     if ([segue.identifier isEqualToString:@"Show photo"])
         if ([segue.destinationViewController isKindOfClass:[PhotoViewController class]])
         {
-            NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
+            UITableViewCell *cell = (UITableViewCell *)sender;
+            NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
             NSURL *photoURL = [FlickrFetcher URLforPhoto:self.photos[indexPath.row] format:FlickrPhotoFormatLarge];
-            ((PhotoViewController *)segue.destinationViewController).photoURL = photoURL;
+            
+            PhotoViewController *phototVC = (PhotoViewController *)segue.destinationViewController;
+            phototVC.photoURL = photoURL;
+            phototVC.photoTitle = cell.textLabel.text;
+            
         }
 }
 /*

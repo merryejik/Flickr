@@ -8,6 +8,7 @@
 
 #import "PlacePhotosTVC.h"
 #import "FlickrFetcher.h"
+#import "PhotoViewController.h"
 
 @interface PlacePhotosTVC ()
 
@@ -70,10 +71,29 @@
     static NSString *CellIdentifier = @"Flickr photo";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    cell.textLabel.text = [self.photos[indexPath.row] valueForKeyPath:FLICKR_PHOTO_TITLE];
+    NSString *title = [self.photos[indexPath.row] valueForKeyPath:FLICKR_PHOTO_TITLE];
+    NSString *detail = [self.photos[indexPath.row] valueForKeyPath:FLICKR_PHOTO_DESCRIPTION];
+    if (!title || [title isEqualToString:@""])
+    {
+        if (!detail || [detail isEqualToString:@""]) {
+            title = @"UNKNOW";
+        } else title = detail;
+    }
+    cell.textLabel.text = title;
+    cell.detailTextLabel.text = detail;
     return cell;
 }
 
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"Show photo"])
+        if ([segue.destinationViewController isKindOfClass:[PhotoViewController class]])
+        {
+            NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
+            NSURL *photoURL = [self.photos[indexPath.row] valueForKeyPath:FLICKR_PHOTO_OWNER];
+            ((PhotoViewController *)segue.destinationViewController).photoURL = photoURL;
+        }
+}
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath

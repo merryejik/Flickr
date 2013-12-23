@@ -30,6 +30,7 @@
 		FFEB7028186793C600D361BE /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = FFEB7027186793C600D361BE /* Place.m */; };
 		FFEB702B186793C600D361BE /* Country.m in Sources */ = {isa = PBXBuildFile; fileRef = FFEB702A186793C600D361BE /* Country.m */; };
 		FFEB702E186890F900D361BE /* PlacePhotosTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FFEB702D186890F900D361BE /* PlacePhotosTVC.m */; };
+		FFEB70341868C70700D361BE /* PhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFEB70331868C70700D361BE /* PhotoViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +81,8 @@
 		FFEB702A186793C600D361BE /* Country.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Country.m; path = Model/Country.m; sourceTree = "<group>"; };
 		FFEB702C186890F900D361BE /* PlacePhotosTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlacePhotosTVC.h; sourceTree = "<group>"; };
 		FFEB702D186890F900D361BE /* PlacePhotosTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlacePhotosTVC.m; sourceTree = "<group>"; };
+		FFEB70321868C70700D361BE /* PhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoViewController.h; sourceTree = "<group>"; };
+		FFEB70331868C70700D361BE /* PhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -217,6 +220,8 @@
 				FF5474D21865C71F00A51E91 /* TopPlacesTVC.m */,
 				FFEB702C186890F900D361BE /* PlacePhotosTVC.h */,
 				FFEB702D186890F900D361BE /* PlacePhotosTVC.m */,
+				FFEB70321868C70700D361BE /* PhotoViewController.h */,
+				FFEB70331868C70700D361BE /* PhotoViewController.m */,
 				FF5474CD1865839500A51E91 /* CoreDataTableViewController */,
 			);
 			name = Controller;
@@ -352,6 +357,7 @@
 				FF54749D1865814600A51E91 /* main.m in Sources */,
 				FFEB7025186790FE00D361BE /* Place+Create.m in Sources */,
 				FFEB702B186793C600D361BE /* Country.m in Sources */,
+				FFEB70341868C70700D361BE /* PhotoViewController.m in Sources */,
 				FF54757D1866FD3800A51E91 /* ManagedDocument.m in Sources */,
 				FF5474D01865839500A51E91 /* CoreDataTableViewController.m in Sources */,
 			);

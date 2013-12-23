@@ -8,8 +8,6 @@
 
 #import "TopPlacesTVC.h"
 #import "FlickrFetcher.h"
-#import "Place.h"
-#import "Place+Create.h"
 #import "DatabaseAvailability.h"
 
 @interface TopPlacesTVC ()
@@ -67,14 +65,10 @@
 -(void)parsePlacesByCountries
 {
     NSMutableDictionary *countries = [[NSMutableDictionary alloc] init];
-    for (NSDictionary *place in self.places)
+    for (NSDictionary *placeFlickr in self.places)
     {
-        NSString *placeName = [place valueForKey:FLICKR_PLACE_NAME];
-        NSRange lastComma = [placeName rangeOfString:@"," options:NSBackwardsSearch];
-        if (lastComma.location == NSNotFound) continue;
-        if (lastComma.location + 2 >= placeName.length) continue;
-        
-        NSString *countryName = [placeName substringFromIndex:lastComma.location+2];
+        Place *place = [Place placeWithFlickrData:placeFlickr InManagedObjectContext:self.managedContext];
+        NSString *countryName = place.country.name;
         if (![countries valueForKey:countryName])
         {
             countries[countryName] = [[NSMutableArray alloc] initWithObjects:place, nil];
@@ -83,9 +77,8 @@
         {
             [countries[countryName] addObject:place];
         }
-        Place *p = [Place placeWithFlickrData:place InManagedObjectContext:self.managedContext];
     }
-    //NSLog(@"%@", countries);
+    NSLog(@"%@", countries);
     self.placesByCountry = countries;
 }
 
@@ -114,10 +107,10 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     NSArray *countyPlaces = [self dictionary:self.placesByCountry ValueByKeyIndex:indexPath.section];
-    NSDictionary *place = countyPlaces[indexPath.row];
+    Place *place = countyPlaces[indexPath.row];
     
-    cell.textLabel.text = [place valueForKey:FLICKR_PLACE_NAME];
-    cell.detailTextLabel.text = @"Bye";
+    cell.textLabel.text = place.name;
+    cell.detailTextLabel.text = place.details;
     return cell;
 }
 

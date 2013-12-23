@@ -24,9 +24,11 @@
     
     place.name = [placeDescription substringWithRange:NSMakeRange(0, firstComma.location)];
     
-    NSInteger detailsLength = placeDescription.length - firstComma.location - 2 - lastComma.location;
-    if (detailsLength < 0) detailsLength = placeDescription.length - firstComma.location - 2;
-    
+    NSInteger detailsLength = lastComma.location - firstComma.location - 2;
+    if (detailsLength < 0)
+    {
+        detailsLength = placeDescription.length - firstComma.location - 2;
+    }
     place.details = [placeDescription substringWithRange:NSMakeRange(firstComma.location+2, detailsLength)];
     
     if (lastComma.location != NSNotFound && lastComma.location + 2 < placeDescription.length)

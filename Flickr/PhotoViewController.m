@@ -60,7 +60,12 @@
 
 -(void)startDownloadPhoto
 {
-    
+    self.image = nil;
+    if (self.photoURL)
+    {
+        NSData *imageData = [NSData dataWithContentsOfURL:self.photoURL];
+        self.image = [UIImage imageWithData:imageData];
+    }
 }
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView

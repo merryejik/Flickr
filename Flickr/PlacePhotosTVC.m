@@ -90,7 +90,7 @@
         if ([segue.destinationViewController isKindOfClass:[PhotoViewController class]])
         {
             NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
-            NSURL *photoURL = [self.photos[indexPath.row] valueForKeyPath:FLICKR_PHOTO_OWNER];
+            NSURL *photoURL = [FlickrFetcher URLforPhoto:self.photos[indexPath.row] format:FlickrPhotoFormatLarge];
             ((PhotoViewController *)segue.destinationViewController).photoURL = photoURL;
         }
 }

@@ -38,16 +38,22 @@
     return self;
 }
 
+- (NSDictionary *)dataFromFlickrURL:(NSURL *)topPlacesUrl
+{
+    NSData *topPlacesJSONData = [NSData dataWithContentsOfURL:topPlacesUrl];
+    
+    NSError *error;
+    NSDictionary *topPlacesData = [NSJSONSerialization JSONObjectWithData:topPlacesJSONData
+                                                                  options:0 error:&error];
+    return topPlacesData;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     NSURL *topPlacesUrl = [FlickrFetcher URLforTopPlaces];
-    NSData *topPlacesJSONData = [NSData dataWithContentsOfURL:topPlacesUrl];
-
-    NSError *error;
-    NSDictionary *topPlacesData = [NSJSONSerialization JSONObjectWithData:topPlacesJSONData
-                                                            options:0 error:&error];
+    NSDictionary *topPlacesData = [self dataFromFlickrURL:topPlacesUrl];
 
     self.places = [topPlacesData valueForKeyPath:FLICKR_RESULTS_PLACES];
 }
@@ -151,7 +157,6 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    NSLog(@"%@",segue.identifier);
     if ([segue.identifier isEqualToString:@"Photo by Place"])
         if ([segue.destinationViewController isKindOfClass:[PlacePhotosTVC class]])
              {
@@ -159,8 +164,12 @@
                  
                  NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
                  Place *place = [self placeByIndexPath:indexPath];
-                 
                  photosTVC.placeName = place.name;
+                 
+                 NSURL *url = [FlickrFetcher URLforPhotosInPlace:place.id maxResults:50];
+                 NSDictionary *photoDictionary = [self dataFromFlickrURL:url];
+                 photosTVC.photos = [photoDictionary valueForKeyPath:FLICKR_RESULTS_PHOTOS];
+                 NSLog(@"%@", photosTVC.photos);
              }
 }
 

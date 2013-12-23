@@ -7,6 +7,7 @@
 //
 
 #import "PlacePhotosTVC.h"
+#import "FlickrFetcher.h"
 
 @interface PlacePhotosTVC ()
 
@@ -69,7 +70,7 @@
     static NSString *CellIdentifier = @"Flickr photo";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    cell.textLabel.text = self.photos.description;
+    cell.textLabel.text = [self.photos[indexPath.row] valueForKeyPath:FLICKR_PHOTO_TITLE];
     return cell;
 }
 

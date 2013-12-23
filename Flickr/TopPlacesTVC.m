@@ -12,6 +12,8 @@
 
 @interface TopPlacesTVC ()
 
+@property (strong, nonatomic) NSArray *sortedCountryDictionaryKeys; // of NSString
+
 @end
 
 @implementation TopPlacesTVC
@@ -78,8 +80,31 @@
             [countries[countryName] addObject:place];
         }
     }
-    NSLog(@"%@", countries);
+    
+    self.sortedCountryDictionaryKeys = [self createSortedDictionaryKeysArray:countries];
+    for (int i=0; i<self.sortedCountryDictionaryKeys.count; i++)
+    {
+        NSArray *arrayForSort = [self dictionary:countries ValueByKeyIndex:i];
+        arrayForSort = [arrayForSort sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            NSString *place1 = ((Place *)obj1).name;
+            NSString *place2 = ((Place *)obj2).name;
+            return [place1 compare:place2 options:NSCaseInsensitiveSearch];
+        }];
+        countries[self.sortedCountryDictionaryKeys[i]] = arrayForSort;
+    };
+    
+
     self.placesByCountry = countries;
+}
+
+
+-(NSArray *)createSortedDictionaryKeysArray:(NSDictionary *)dictionary
+{
+    NSArray *keys = [dictionary allKeys];
+    NSArray *sortedKeys = [keys sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        return [obj1 compare:obj2 options:NSCaseInsensitiveSearch];
+    }];
+    return sortedKeys;
 }
 
 #pragma mark - UITableViewController
@@ -96,8 +121,7 @@
 
 -(id)dictionary:(NSDictionary *)dictionary ValueByKeyIndex:(NSInteger)index
 {
-    NSArray *allKeys = [dictionary allKeys];
-    id keyAtIndex = allKeys[index];
+    id keyAtIndex = self.sortedCountryDictionaryKeys[index];
     return [dictionary valueForKey:keyAtIndex];
 }
 
@@ -116,7 +140,6 @@
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    NSArray *allKeys = [self.placesByCountry allKeys];
-    return allKeys[section];
+    return self.sortedCountryDictionaryKeys[section];
 }
 @end

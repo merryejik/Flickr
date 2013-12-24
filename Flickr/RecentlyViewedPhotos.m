@@ -1,49 +1,44 @@
 //
-//  PlacePhotosTVCViewController.m
+//  RecentlyViewedPhotos.m
 //  Photomania
 //
-//  Created by Maria on 23.12.13.
+//  Created by Maria on 24.12.13.
 //  Copyright (c) 2013 Maria Naschanskaya. All rights reserved.
 //
 
-#import "PlacePhotosTVC.h"
-#import "FlickrFetcher.h"
-#import "PhotoViewController.h"
+#import "RecentlyViewedPhotos.h"
 #import "FlickrPhotoParser.h"
+#import "DatabaseAvailability.h"
+#import "PhotoViewController.h"
 
-@interface PlacePhotosTVC ()
+@interface RecentlyViewedPhotos ()
 
 @end
 
-@implementation PlacePhotosTVC
-
--(void)setPhotos:(NSArray *)photos
-{
-    _photos = photos;
-    [self.tableView reloadData];
-}
-
--(void)setPlaceName:(NSString *)placeName
-{
-    _placeName = placeName;
-    self.title = placeName;
-}
-
--(void)useFlickrData:(NSDictionary *)flickrData
-{
-    [super useFlickrData:flickrData];
-    self.photos = [flickrData valueForKeyPath:FLICKR_RESULTS_PHOTOS];
-}
+@implementation RecentlyViewedPhotos
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+ 
+    [self loadData];
+    NSLog(@"photo count %d", self.photos.count);
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+-(void)loadData
+{
+     self.photos = [[NSUserDefaults standardUserDefaults] arrayForKey:RECENT_PHOTOS_KEY];
+    [self.tableView reloadData];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [self loadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -56,27 +51,31 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
+    // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    // Return the number of rows in the section.
     return self.photos.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Flickr photo";
+    static NSString *CellIdentifier = @"Photo cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
+    // Configure the cell...
     cell.textLabel.text = [FlickrPhotoParser photoTitle:self.photos[indexPath.row]];
     cell.detailTextLabel.text = [FlickrPhotoParser photoDetail:self.photos[indexPath.row]];
+    
     return cell;
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"Show photo"])
+    if ([segue.identifier isEqualToString:@"Flickr Photo"])
         if ([segue.destinationViewController isKindOfClass:[PhotoViewController class]])
         {
             UITableViewCell *cell = (UITableViewCell *)sender;
@@ -86,26 +85,10 @@
             PhotoViewController *phototVC = (PhotoViewController *)segue.destinationViewController;
             phototVC.photoURL = photoURL;
             phototVC.photoTitle = cell.textLabel.text;
-            
-            [self savePhotoToRecent:self.photos[indexPath.row]];
         }
 }
 
--(void)savePhotoToRecent:(NSDictionary *)photo
-{
-    NSMutableArray* recentPhotos = [[NSUserDefaults standardUserDefaults] mutableArrayValueForKey:RECENT_PHOTOS_KEY];
-    
-    if (recentPhotos.count<20)
-    {
-        [recentPhotos addObject:photo];
-    }
-    else
-    {
-        
-    }
-    [[NSUserDefaults standardUserDefaults] setValue:recentPhotos forKey:RECENT_PHOTOS_KEY];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
+
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath

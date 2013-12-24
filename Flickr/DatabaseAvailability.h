@@ -16,6 +16,8 @@
 #define DatabaseAvailabilityNotification @"DatabaseAvailabilityNotification"
 #define DatabaseAvailabilityContext @"Context"
 
+#define RECENT_PHOTOS_KEY @"Recently viewed photos"
+
 #define PlaceEntry @"Place"
 #define CountryEntry @"Country"
 #endif

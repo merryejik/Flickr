@@ -43,10 +43,22 @@
 {
     self.imageView.image = image;
     
+    float zoom = image.size.height / self.scrollView.bounds.size.height;
+    NSLog(@"image %f %f", image.size.width, image.size.height);
+    NSLog(@"scrollView %f %f", self.scrollView.bounds.size.width, self.scrollView.bounds.size.height);
+    if (image.size.width*zoom < self.scrollView.bounds.size.width)
+    {
+        zoom = image.size.width / self.scrollView.bounds.size.width;
+        NSLog(@"small width");
+    }
+    NSLog(@"zoom %f", zoom);
+    NSLog(@"zoomedRect %f %f", image.size.width/zoom, image.size.height/zoom);
     self.scrollView.zoomScale = 1.0;
     self.imageView.frame = CGRectMake(0,0, image.size.width, image.size.height);
     
     self.scrollView.contentSize = self.image ? self.image.size : CGSizeZero;
+    
+    [self.scrollView zoomToRect:CGRectMake(0, 0, self.scrollView.bounds.size.width*zoom, self.scrollView.bounds.size.height*zoom) animated:NO];
     
     [self.activityIndicator stopAnimating];
 }

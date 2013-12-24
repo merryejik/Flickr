@@ -66,6 +66,12 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Top Places" id="4aW-6l-MPm"/>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="top" id="nND-8R-PSa">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <connections>
+                            <action selector="refresh:" destination="jun-IS-Yru" eventType="valueChanged" id="hHJ-7Q-DKl"/>
+                        </connections>
+                    </refreshControl>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2zW-WN-E48" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

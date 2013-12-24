@@ -14,10 +14,13 @@
 @interface TopPlacesTVC ()
 
 @property (strong, nonatomic) NSArray *sortedCountryDictionaryKeys; // of NSString
-
 @end
 
 @implementation TopPlacesTVC
+
+- (IBAction)refresh:(id)sender {
+    [self loadDataFromFlicker];
+}
 
 -(void)awakeFromNib
 {
@@ -52,18 +55,39 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    [self startRefreshing];
+    [self loadDataFromFlicker];
+    
+}
+
+-(void)startRefreshing
+{
+    self.tableView.bounds = CGRectMake(0, -self.refreshControl.bounds.size.height, self.tableView.bounds.size.width, self.tableView.bounds.size.height);
+    [self.refreshControl beginRefreshing];
+}
+
+-(void)stopRefreshing
+{
+    self.tableView.bounds = CGRectMake(0, 0, self.tableView.bounds.size.width, self.tableView.bounds.size.height);
+    [self.refreshControl endRefreshing];
+}
+
+
+-(void)loadDataFromFlicker
+{
     NSURL *topPlacesUrl = [FlickrFetcher URLforTopPlaces];
     
     NSURLRequest *request = [NSURLRequest requestWithURL:topPlacesUrl];
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration ephemeralSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
     NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:request
-        completionHandler:^(NSURL *localFile, NSURLResponse *response, NSError *error) {
+        completionHandler:^(NSURL *localFile, NSURLResponse *response, NSError *error)
+        {
             NSDictionary *topPlacesData = [self dataFromFlickrURL:localFile];
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.places = [topPlacesData valueForKeyPath:FLICKR_RESULTS_PLACES];
             });
-    }];
+        }];
     [task resume];
 }
 
@@ -72,13 +96,9 @@
     _places = places;
     [self parsePlacesByCountries];
     [self.tableView reloadData];
+    [self stopRefreshing];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 -(void)parsePlacesByCountries
 {

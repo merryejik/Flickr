@@ -16,6 +16,10 @@
 
 @implementation TopPlacesTVC
 
+-(NSURL *)accordingFlickrURL
+{
+    return [FlickrFetcher URLforTopPlaces];
+}
 
 -(void)loadDataToDB
 {
@@ -30,6 +34,7 @@
 
 -(void)useFlickrData:(NSDictionary *)flickrData
 {
+    [super useFlickrData:flickrData];
     self.places = [flickrData valueForKeyPath:FLICKR_RESULTS_PLACES];
 }
 
@@ -38,9 +43,23 @@
     _places = places;
     [self parsePlacesByCountries];
     [self.tableView reloadData];
-    [self stopRefreshing];
 }
 
+
+- (void)sortPlaces:(NSMutableDictionary *)countries
+{
+    self.sortedCountryDictionaryKeys = [self createSortedDictionaryKeysArray:countries];
+    for (int i=0; i<self.sortedCountryDictionaryKeys.count; i++)
+    {
+        NSArray *arrayForSort = [self dictionary:countries ValueByKeyIndex:i];
+        arrayForSort = [arrayForSort sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            NSString *place1 = ((Place *)obj1).name;
+            NSString *place2 = ((Place *)obj2).name;
+            return [place1 compare:place2 options:NSCaseInsensitiveSearch];
+        }];
+        countries[self.sortedCountryDictionaryKeys[i]] = arrayForSort;
+    };
+}
 
 -(void)parsePlacesByCountries
 {
@@ -59,19 +78,8 @@
         }
     }
     
-    self.sortedCountryDictionaryKeys = [self createSortedDictionaryKeysArray:countries];
-    for (int i=0; i<self.sortedCountryDictionaryKeys.count; i++)
-    {
-        NSArray *arrayForSort = [self dictionary:countries ValueByKeyIndex:i];
-        arrayForSort = [arrayForSort sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-            NSString *place1 = ((Place *)obj1).name;
-            NSString *place2 = ((Place *)obj2).name;
-            return [place1 compare:place2 options:NSCaseInsensitiveSearch];
-        }];
-        countries[self.sortedCountryDictionaryKeys[i]] = arrayForSort;
-    };
+    [self sortPlaces:countries];
     
-
     self.placesByCountry = countries;
 }
 
@@ -126,6 +134,7 @@
     return self.sortedCountryDictionaryKeys[section];
 }
 
+#pragma mark - SEGUE
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"Photo by Place"])
@@ -135,12 +144,14 @@
                  
                  NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
                  Place *place = [self placeByIndexPath:indexPath];
+                 
                  photosTVC.placeName = place.name;
                  
                  NSURL *url = [FlickrFetcher URLforPhotosInPlace:place.id maxResults:50];
-                 NSDictionary *photoDictionary = [self dataFromFlickrURL:url];
-                 photosTVC.photos = [photoDictionary valueForKeyPath:FLICKR_RESULTS_PHOTOS];
-                 NSLog(@"%@", photosTVC.photos);
+                 photosTVC.accordingFlickrURL = url;
+                 
+//                 NSDictionary *photoDictionary = [self dataFromFlickrURL:url];
+//                 photosTVC.photos = [photoDictionary valueForKeyPath:FLICKR_RESULTS_PHOTOS];
              }
 }
 

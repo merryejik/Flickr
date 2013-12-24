@@ -28,13 +28,10 @@
     self.title = placeName;
 }
 
-- (id)initWithStyle:(UITableViewStyle)style
+-(void)useFlickrData:(NSDictionary *)flickrData
 {
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+    [super useFlickrData:flickrData];
+    self.photos = [flickrData valueForKeyPath:FLICKR_RESULTS_PHOTOS];
 }
 
 - (void)viewDidLoad

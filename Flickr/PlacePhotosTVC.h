@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FlickrDataTVC.h"
 
-@interface PlacePhotosTVC : UITableViewController
+@interface PlacePhotosTVC : FlickrDataTVC
 
 @property (strong, nonatomic) NSArray *photos;
 @property (strong, nonatomic) NSString *placeName;

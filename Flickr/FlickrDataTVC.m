@@ -15,7 +15,7 @@
 @implementation FlickrDataTVC
 
 - (IBAction)refresh:(id)sender {
-    [self loadDataFromFlicker];
+    [self loadDataFromFlicker: self.accordingFlickrURL];
 }
 
 -(void)awakeFromNib
@@ -33,7 +33,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     [self startRefreshing];
-    [self loadDataFromFlicker];
+    [self loadDataFromFlicker: self.accordingFlickrURL];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -48,11 +48,9 @@
 }
 
 
--(void)loadDataFromFlicker
+-(void)loadDataFromFlicker:(NSURL *)flickrUrl
 {
-    NSURL *topPlacesUrl = [FlickrFetcher URLforTopPlaces];
-    
-    NSURLRequest *request = [NSURLRequest requestWithURL:topPlacesUrl];
+    NSURLRequest *request = [NSURLRequest requestWithURL:flickrUrl];
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration ephemeralSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
     NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:request
@@ -68,7 +66,7 @@
 
 -(void)useFlickrData:(NSDictionary *)flickrData
 {
-    
+     [self stopRefreshing];
 }
 
 - (NSDictionary *)dataFromFlickrURL:(NSURL *)url
@@ -91,6 +89,7 @@
 {
     self.tableView.bounds = CGRectMake(0, 0, self.tableView.bounds.size.width, self.tableView.bounds.size.height);
     [self.refreshControl endRefreshing];
+    [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
 }
 
 - (void)didReceiveMemoryWarning

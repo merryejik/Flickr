@@ -13,9 +13,11 @@
 @interface FlickrDataTVC : UITableViewController
 
 @property (strong, nonatomic) NSManagedObjectContext *managedContext;
+@property (strong, nonatomic) NSURL *accordingFlickrURL;
 
 - (NSDictionary *)dataFromFlickrURL:(NSURL *)url;
--(void)loadDataFromFlicker;
+-(void)loadDataFromFlicker:(NSURL *)url;
+-(void)useFlickrData:(NSDictionary *)flickrData;
 - (void)startRefreshing;
 - (void)stopRefreshing;
 

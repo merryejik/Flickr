@@ -53,16 +53,25 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     NSURL *topPlacesUrl = [FlickrFetcher URLforTopPlaces];
-    NSDictionary *topPlacesData = [self dataFromFlickrURL:topPlacesUrl];
-
-    self.places = [topPlacesData valueForKeyPath:FLICKR_RESULTS_PLACES];
+    
+    NSURLRequest *request = [NSURLRequest requestWithURL:topPlacesUrl];
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration ephemeralSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
+    NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:request
+        completionHandler:^(NSURL *localFile, NSURLResponse *response, NSError *error) {
+            NSDictionary *topPlacesData = [self dataFromFlickrURL:localFile];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.places = [topPlacesData valueForKeyPath:FLICKR_RESULTS_PLACES];
+            });
+    }];
+    [task resume];
 }
 
 -(void)setPlaces:(NSArray *)places
 {
     _places = places;
-   // [self parsePlacesByCountries];
-   // [self.tableView reloadData];
+    [self parsePlacesByCountries];
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning

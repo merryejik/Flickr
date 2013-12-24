@@ -31,6 +31,7 @@
 		FFEB702B186793C600D361BE /* Country.m in Sources */ = {isa = PBXBuildFile; fileRef = FFEB702A186793C600D361BE /* Country.m */; };
 		FFEB702E186890F900D361BE /* PlacePhotosTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FFEB702D186890F900D361BE /* PlacePhotosTVC.m */; };
 		FFEB70341868C70700D361BE /* PhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFEB70331868C70700D361BE /* PhotoViewController.m */; };
+		FFEB70371869EFD200D361BE /* FlickrDataTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FFEB70361869EFD200D361BE /* FlickrDataTVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,8 @@
 		FFEB702D186890F900D361BE /* PlacePhotosTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlacePhotosTVC.m; sourceTree = "<group>"; };
 		FFEB70321868C70700D361BE /* PhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoViewController.h; sourceTree = "<group>"; };
 		FFEB70331868C70700D361BE /* PhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoViewController.m; sourceTree = "<group>"; };
+		FFEB70351869EFD200D361BE /* FlickrDataTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlickrDataTVC.h; sourceTree = "<group>"; };
+		FFEB70361869EFD200D361BE /* FlickrDataTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlickrDataTVC.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -216,6 +219,8 @@
 		FFEB702F1868986800D361BE /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				FFEB70351869EFD200D361BE /* FlickrDataTVC.h */,
+				FFEB70361869EFD200D361BE /* FlickrDataTVC.m */,
 				FF5474D11865C71F00A51E91 /* TopPlacesTVC.h */,
 				FF5474D21865C71F00A51E91 /* TopPlacesTVC.m */,
 				FFEB702C186890F900D361BE /* PlacePhotosTVC.h */,
@@ -357,6 +362,7 @@
 				FF54749D1865814600A51E91 /* main.m in Sources */,
 				FFEB7025186790FE00D361BE /* Place+Create.m in Sources */,
 				FFEB702B186793C600D361BE /* Country.m in Sources */,
+				FFEB70371869EFD200D361BE /* FlickrDataTVC.m in Sources */,
 				FFEB70341868C70700D361BE /* PhotoViewController.m in Sources */,
 				FF54757D1866FD3800A51E91 /* ManagedDocument.m in Sources */,
 				FF5474D01865839500A51E91 /* CoreDataTableViewController.m in Sources */,

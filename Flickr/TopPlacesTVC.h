@@ -7,11 +7,11 @@
 //
 
 #import "CoreDataTableViewController.h"
+#import "FlickrDataTVC.h"
 
-@interface TopPlacesTVC : UITableViewController
+@interface TopPlacesTVC : FlickrDataTVC
 
 @property (strong, nonatomic) NSArray *places;
 @property (strong, nonatomic) NSDictionary *placesByCountry; //of Place by CountryName
-@property (strong, nonatomic) NSManagedObjectContext *managedContext;
 
 @end

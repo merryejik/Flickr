@@ -7,8 +7,6 @@
 //
 
 #import "TopPlacesTVC.h"
-#import "FlickrFetcher.h"
-#import "DatabaseAvailability.h"
 #import "PlacePhotosTVC.h"
 
 @interface TopPlacesTVC ()
@@ -18,77 +16,21 @@
 
 @implementation TopPlacesTVC
 
-- (IBAction)refresh:(id)sender {
-    [self loadDataFromFlicker];
-}
 
--(void)awakeFromNib
+-(void)loadDataToDB
 {
-    [[NSNotificationCenter defaultCenter] addObserverForName:DatabaseAvailabilityNotification object:nil queue:nil usingBlock:^(NSNotification *notification)
-     {
-         self.managedContext = notification.userInfo[DatabaseAvailabilityContext];
-         [self parsePlacesByCountries];
-         [self.tableView reloadData];
-     }];
-}
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
-- (NSDictionary *)dataFromFlickrURL:(NSURL *)topPlacesUrl
-{
-    NSData *topPlacesJSONData = [NSData dataWithContentsOfURL:topPlacesUrl];
-    
-    NSError *error;
-    NSDictionary *topPlacesData = [NSJSONSerialization JSONObjectWithData:topPlacesJSONData
-                                                                  options:0 error:&error];
-    return topPlacesData;
+      [self parsePlacesByCountries];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    [self startRefreshing];
-    [self loadDataFromFlicker];
-    
 }
 
--(void)startRefreshing
+-(void)useFlickrData:(NSDictionary *)flickrData
 {
-    self.tableView.bounds = CGRectMake(0, -self.refreshControl.bounds.size.height, self.tableView.bounds.size.width, self.tableView.bounds.size.height);
-    [self.refreshControl beginRefreshing];
-}
-
--(void)stopRefreshing
-{
-    self.tableView.bounds = CGRectMake(0, 0, self.tableView.bounds.size.width, self.tableView.bounds.size.height);
-    [self.refreshControl endRefreshing];
-}
-
-
--(void)loadDataFromFlicker
-{
-    NSURL *topPlacesUrl = [FlickrFetcher URLforTopPlaces];
-    
-    NSURLRequest *request = [NSURLRequest requestWithURL:topPlacesUrl];
-    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration ephemeralSessionConfiguration];
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
-    NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:request
-        completionHandler:^(NSURL *localFile, NSURLResponse *response, NSError *error)
-        {
-            NSDictionary *topPlacesData = [self dataFromFlickrURL:localFile];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                self.places = [topPlacesData valueForKeyPath:FLICKR_RESULTS_PLACES];
-            });
-        }];
-    [task resume];
+    self.places = [flickrData valueForKeyPath:FLICKR_RESULTS_PLACES];
 }
 
 -(void)setPlaces:(NSArray *)places

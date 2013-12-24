@@ -132,20 +132,29 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="heN-ZA-sxJ">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="588"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </scrollView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="fyV-kg-bVk">
+                                <rect key="frame" x="142" y="266" width="37" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="heN-ZA-sxJ" firstAttribute="leading" secondItem="Gda-pf-Vya" secondAttribute="leading" id="0BG-cN-nit"/>
-                            <constraint firstAttribute="bottom" secondItem="heN-ZA-sxJ" secondAttribute="bottom" constant="-20" id="HwQ-cH-Md1"/>
+                            <constraint firstAttribute="centerX" secondItem="heN-ZA-sxJ" secondAttribute="centerX" id="7GE-pp-jdb"/>
+                            <constraint firstAttribute="centerX" secondItem="fyV-kg-bVk" secondAttribute="centerX" id="MQA-cp-4gF"/>
+                            <constraint firstAttribute="centerY" secondItem="fyV-kg-bVk" secondAttribute="centerY" id="MmF-Kl-LUO"/>
                             <constraint firstItem="heN-ZA-sxJ" firstAttribute="top" secondItem="Gda-pf-Vya" secondAttribute="top" id="Sez-nb-uzl"/>
+                            <constraint firstAttribute="centerY" secondItem="heN-ZA-sxJ" secondAttribute="centerY" id="bm2-oF-8pX"/>
                             <constraint firstAttribute="trailing" secondItem="heN-ZA-sxJ" secondAttribute="trailing" id="idZ-9d-3fr"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="9QM-Yo-Qez"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="fyV-kg-bVk" id="Qcg-cy-ud9"/>
                         <outlet property="scrollView" destination="heN-ZA-sxJ" id="YjX-Gm-n8q"/>
                     </connections>
                 </viewController>

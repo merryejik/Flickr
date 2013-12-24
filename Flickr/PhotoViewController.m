@@ -11,6 +11,7 @@
 @interface PhotoViewController () <UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (strong, nonatomic) UIImageView *imageView;
 @property (strong, nonatomic) UIImage *image;
 @end
@@ -46,6 +47,8 @@
     self.imageView.frame = CGRectMake(0,0, image.size.width, image.size.height);
     
     self.scrollView.contentSize = self.image ? self.image.size : CGSizeZero;
+    
+    [self.activityIndicator stopAnimating];
 }
 
 -(void)setScrollView:(UIScrollView *)scrollView
@@ -70,8 +73,23 @@
     self.image = nil;
     if (self.photoURL)
     {
-        NSData *imageData = [NSData dataWithContentsOfURL:self.photoURL];
-        self.image = [UIImage imageWithData:imageData];
+        [self.activityIndicator startAnimating];
+        NSURLRequest *request = [NSURLRequest requestWithURL:self.photoURL];
+        NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration ephemeralSessionConfiguration];
+        NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
+        NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:request
+            completionHandler:^(NSURL *localFile, NSURLResponse *response, NSError *error) {
+                if (!error)
+                    if ([request.URL isEqual:self.photoURL])
+                    {
+                        NSData *imageData = [NSData dataWithContentsOfURL:localFile];
+                        UIImage *image = [UIImage imageWithData:imageData];
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            self.image = image;
+                        });
+                    }
+        }];
+        [task resume];
     }
 }
 

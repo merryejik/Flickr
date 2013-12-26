@@ -81,30 +81,54 @@
         {
             UITableViewCell *cell = (UITableViewCell *)sender;
             NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-            NSURL *photoURL = [FlickrPhotoParser photoURL:self.photos[indexPath.row]];
             
-            PhotoViewController *phototVC = (PhotoViewController *)segue.destinationViewController;
-            phototVC.photoURL = photoURL;
-            phototVC.photoTitle = cell.textLabel.text;
-            
-            [self savePhotoToRecent:self.photos[indexPath.row]];
+            PhotoViewController *photoVC = (PhotoViewController *)segue.destinationViewController;
+            [self setPhotoView:self.photos[indexPath.row] title:cell.textLabel.text ToController:photoVC];
         }
+}
+
+-(void)setPhotoView:(NSDictionary *)photo title:(NSString *)title ToController:(PhotoViewController *)photoVC
+{
+    NSURL *photoURL = [FlickrPhotoParser photoURL:photo];
+    photoVC.photoURL = photoURL;
+    photoVC.photoTitle = title;
+    
+    [self savePhotoToRecent:photo];
 }
 
 -(void)savePhotoToRecent:(NSDictionary *)photo
 {
     NSMutableArray* recentPhotos = [[NSUserDefaults standardUserDefaults] mutableArrayValueForKey:RECENT_PHOTOS_KEY];
     
-    if (recentPhotos.count<20)
+    if ([recentPhotos containsObject:photo]) return;
+#warning Verify 
+    [recentPhotos insertObject:photo atIndex:0];
+    if (recentPhotos.count>20)
     {
-        [recentPhotos addObject:photo];
-    }
-    else
-    {
-        
+        [recentPhotos removeObjectAtIndex:20];
+        NSLog(@"recent photos count %d", recentPhotos.count);
     }
     [[NSUserDefaults standardUserDefaults] setValue:recentPhotos forKey:RECENT_PHOTOS_KEY];
     [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+#pragma mark - for UISplitViewController
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (!self.splitViewController) return;
+    
+    UIViewController *detail = [self.splitViewController.viewControllers lastObject];
+    if ([detail isKindOfClass:[UINavigationController class]])
+    {
+        detail = [((UINavigationController *)detail).viewControllers firstObject];
+    }
+    
+    if ([detail isKindOfClass:[PhotoViewController class]])
+    {
+        NSString *photoTitle = [self.tableView cellForRowAtIndexPath:indexPath].textLabel.text;
+        [self setPhotoView:self.photos[indexPath.row] title:photoTitle ToController:(PhotoViewController *)detail];
+    }
 }
 /*
 // Override to support conditional editing of the table view.

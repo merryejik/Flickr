@@ -88,6 +88,31 @@
         }
 }
 
+#pragma mark - for UISplitViewController
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (!self.splitViewController) return;
+    
+    UIViewController *detail = [self.splitViewController.viewControllers lastObject];
+    if ([detail isKindOfClass:[UINavigationController class]])
+    {
+        detail = [((UINavigationController *)detail).viewControllers firstObject];
+    }
+    
+    if ([detail isKindOfClass:[PhotoViewController class]])
+    {
+        NSString *photoTitle = [self.tableView cellForRowAtIndexPath:indexPath].textLabel.text;
+        [self setPhotoView:self.photos[indexPath.row] title:photoTitle ToController:(PhotoViewController *)detail];
+    }
+}
+
+-(void)setPhotoView:(NSDictionary *)photo title:(NSString *)title ToController:(PhotoViewController *)photoVC
+{
+    NSURL *photoURL = [FlickrPhotoParser photoURL:photo];
+    photoVC.photoURL = photoURL;
+    photoVC.photoTitle = title;
+}
 
 /*
 // Override to support conditional editing of the table view.

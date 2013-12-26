@@ -56,10 +56,21 @@
     NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:request
                                                     completionHandler:^(NSURL *localFile, NSURLResponse *response, NSError *error)
                                       {
-                                          NSDictionary *topPlacesData = [self dataFromFlickrURL:localFile];
-                                          dispatch_async(dispatch_get_main_queue(), ^{
-                                              [self useFlickrData:topPlacesData];
-                                          });
+                                          if (!error)
+                                          {
+                                              NSDictionary *topPlacesData = [self dataFromFlickrURL:localFile];
+                                              dispatch_async(dispatch_get_main_queue(), ^{
+                                                  [self useFlickrData:topPlacesData];
+                                              });
+                                          }
+                                          else
+                                          {
+#warning show alert: Maybe don't have internet connection
+                                              NSLog(@"ошибка подключения");
+                                              dispatch_async(dispatch_get_main_queue(), ^{
+                                                  [self stopRefreshing];
+                                              });
+                                          }
                                       }];
     [task resume];
 }

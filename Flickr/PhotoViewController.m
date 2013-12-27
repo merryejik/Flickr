@@ -14,6 +14,8 @@
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (strong, nonatomic) UIImageView *imageView;
 @property (strong, nonatomic) UIImage *image;
+@property (nonatomic) BOOL stopZooming;
+@property (retain, nonatomic) UIPopoverController *popover;
 @end
 
 @implementation PhotoViewController
@@ -43,24 +45,17 @@
 {
     self.imageView.image = image;
     
-    float zoom = image.size.height / self.scrollView.bounds.size.height;
-    NSLog(@"image %f %f", image.size.width, image.size.height);
-    NSLog(@"scrollView %f %f", self.scrollView.bounds.size.width, self.scrollView.bounds.size.height);
-    if (image.size.width*zoom < self.scrollView.bounds.size.width)
+    if (image)
     {
-        zoom = image.size.width / self.scrollView.bounds.size.width;
-        NSLog(@"small width");
+        self.scrollView.zoomScale = 1.0;
+        self.imageView.frame = CGRectMake(0,0, image.size.width, image.size.height);
+        
+        self.scrollView.contentSize = self.image ? self.image.size : CGSizeZero;
+        self.stopZooming = NO;
+        
+        [self.activityIndicator stopAnimating];
+        [self hideMaster];
     }
-    NSLog(@"zoom %f", zoom);
-    NSLog(@"zoomedRect %f %f", image.size.width/zoom, image.size.height/zoom);
-    self.scrollView.zoomScale = 1.0;
-    self.imageView.frame = CGRectMake(0,0, image.size.width, image.size.height);
-    
-    self.scrollView.contentSize = self.image ? self.image.size : CGSizeZero;
-    
-    [self.scrollView zoomToRect:CGRectMake(0, 0, self.scrollView.bounds.size.width*zoom, self.scrollView.bounds.size.height*zoom) animated:NO];
-    
-    [self.activityIndicator stopAnimating];
 }
 
 -(void)setScrollView:(UIScrollView *)scrollView
@@ -72,6 +67,37 @@
     _scrollView.delegate = self;
     
     _scrollView.contentSize = self.image ? self.image.size : CGSizeZero;
+}
+
+
+-(void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view
+{
+    self.stopZooming = YES;
+}
+
+- (void)scaleToFillFreeSpace
+{
+    if (!self.stopZooming)
+    {
+        float wScale = self.imageView.frame.size.width/self.view.bounds.size.width;
+        float hScale = self.imageView.frame.size.height/self.view.bounds.size.height;
+        self.scrollView.zoomScale = MAX(wScale, hScale);
+    }
+}
+
+-(void)viewDidLayoutSubviews
+{
+    [self scaleToFillFreeSpace];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [self scaleToFillFreeSpace];
+}
+
+-(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [self scaleToFillFreeSpace];
 }
 
 -(void)setPhotoURL:(NSURL *)photoURL
@@ -146,10 +172,16 @@
 
 -(void)splitViewController:(UISplitViewController *)svc willHideViewController:(UIViewController *)aViewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)pc
 {
+    self.popover = pc;
+    
     UIViewController *master = aViewController;
-    if ([aViewController isKindOfClass:[UINavigationController class]])
+    if ([master isKindOfClass:[UITabBarController class]])
     {
-        master = [((UINavigationController *)aViewController).viewControllers firstObject];
+        master = ((UITabBarController *)master).selectedViewController;
+    }
+    if ([master isKindOfClass:[UINavigationController class]])
+    {
+        master = [((UINavigationController *)master).viewControllers lastObject];
     }
     barButtonItem.title = master.title;
     self.navigationItem.leftBarButtonItem = barButtonItem;
@@ -158,5 +190,19 @@
 -(void)splitViewController:(UISplitViewController *)svc willShowViewController:(UIViewController *)aViewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
 {
     self.navigationItem.leftBarButtonItem = nil;
+    self.popover = nil;
+}
+
+-(void)hideMaster
+{
+    if (self.popover)
+    {
+        [self.popover dismissPopoverAnimated:YES];
+    }
+}
+
+-(void)dealloc
+{
+    self.popover = nil;
 }
 @end

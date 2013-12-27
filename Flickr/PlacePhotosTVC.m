@@ -101,7 +101,7 @@
     NSMutableArray* recentPhotos = [[NSUserDefaults standardUserDefaults] mutableArrayValueForKey:RECENT_PHOTOS_KEY];
     
     if ([recentPhotos containsObject:photo]) return;
-#warning Verify 
+
     [recentPhotos insertObject:photo atIndex:0];
     if (recentPhotos.count>20)
     {

@@ -26,6 +26,8 @@
 		FF5474D31865C71F00A51E91 /* TopPlacesTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FF5474D21865C71F00A51E91 /* TopPlacesTVC.m */; };
 		FF5474D61866BB9700A51E91 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FF5474D41866BB9700A51E91 /* Model.xcdatamodeld */; };
 		FF54757D1866FD3800A51E91 /* ManagedDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = FF54757C1866FD3800A51E91 /* ManagedDocument.m */; };
+		FFB7E3C3186D710900E9F204 /* SplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB7E3C2186D710900E9F204 /* SplitViewController.m */; };
+		FFB7E3C6186D7C0E00E9F204 /* TabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB7E3C5186D7C0E00E9F204 /* TabBarViewController.m */; };
 		FFEB7025186790FE00D361BE /* Place+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = FFEB7024186790FE00D361BE /* Place+Create.m */; };
 		FFEB7028186793C600D361BE /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = FFEB7027186793C600D361BE /* Place.m */; };
 		FFEB702B186793C600D361BE /* Country.m in Sources */ = {isa = PBXBuildFile; fileRef = FFEB702A186793C600D361BE /* Country.m */; };
@@ -76,6 +78,10 @@
 		FF54757B1866FD3800A51E91 /* ManagedDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManagedDocument.h; sourceTree = "<group>"; };
 		FF54757C1866FD3800A51E91 /* ManagedDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManagedDocument.m; sourceTree = "<group>"; };
 		FF54757E1867371400A51E91 /* DatabaseAvailability.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DatabaseAvailability.h; sourceTree = "<group>"; };
+		FFB7E3C1186D710900E9F204 /* SplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SplitViewController.h; sourceTree = "<group>"; };
+		FFB7E3C2186D710900E9F204 /* SplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SplitViewController.m; sourceTree = "<group>"; };
+		FFB7E3C4186D7C0E00E9F204 /* TabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarViewController.h; sourceTree = "<group>"; };
+		FFB7E3C5186D7C0E00E9F204 /* TabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarViewController.m; sourceTree = "<group>"; };
 		FFEB7023186790FE00D361BE /* Place+Create.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Place+Create.h"; path = "Model/Place+Create.h"; sourceTree = "<group>"; };
 		FFEB7024186790FE00D361BE /* Place+Create.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Place+Create.m"; path = "Model/Place+Create.m"; sourceTree = "<group>"; };
 		FFEB7026186793C600D361BE /* Place.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Place.h; path = Model/Place.h; sourceTree = "<group>"; };
@@ -238,6 +244,10 @@
 				FFEB7038186A2BC000D361BE /* RecentlyViewedPhotos.h */,
 				FFEB7039186A2BC000D361BE /* RecentlyViewedPhotos.m */,
 				FF5474CD1865839500A51E91 /* CoreDataTableViewController */,
+				FFB7E3C1186D710900E9F204 /* SplitViewController.h */,
+				FFB7E3C2186D710900E9F204 /* SplitViewController.m */,
+				FFB7E3C4186D7C0E00E9F204 /* TabBarViewController.h */,
+				FFB7E3C5186D7C0E00E9F204 /* TabBarViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -365,6 +375,7 @@
 			files = (
 				FF5474D31865C71F00A51E91 /* TopPlacesTVC.m in Sources */,
 				FF5474A11865814600A51E91 /* AppDelegate.m in Sources */,
+				FFB7E3C6186D7C0E00E9F204 /* TabBarViewController.m in Sources */,
 				FFEB702E186890F900D361BE /* PlacePhotosTVC.m in Sources */,
 				FF5474D61866BB9700A51E91 /* Model.xcdatamodeld in Sources */,
 				FF5474CC1865835300A51E91 /* FlickrFetcher.m in Sources */,
@@ -372,6 +383,7 @@
 				FFEB7028186793C600D361BE /* Place.m in Sources */,
 				FF54749D1865814600A51E91 /* main.m in Sources */,
 				FFEB7025186790FE00D361BE /* Place+Create.m in Sources */,
+				FFB7E3C3186D710900E9F204 /* SplitViewController.m in Sources */,
 				FFEB702B186793C600D361BE /* Country.m in Sources */,
 				FFEB70371869EFD200D361BE /* FlickrDataTVC.m in Sources */,
 				FFEB703A186A2BC000D361BE /* RecentlyViewedPhotos.m in Sources */,

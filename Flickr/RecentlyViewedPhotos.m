@@ -17,10 +17,16 @@
 
 @implementation RecentlyViewedPhotos
 
+-(void)awakeFromNib
+{
+    [super awakeFromNib];
+    self.title = @"Recentle viewed";
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
- 
+
     [self loadData];
     NSLog(@"photo count %d", self.photos.count);
     // Uncomment the following line to preserve selection between presentations.

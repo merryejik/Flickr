@@ -23,7 +23,7 @@
         <!--Split View Controller-->
         <scene sceneID="rxV-Nk-dla">
             <objects>
-                <splitViewController id="g5M-KW-vFC" sceneMemberID="viewController">
+                <splitViewController id="g5M-KW-vFC" customClass="SplitViewController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <connections>
                         <segue destination="4Mf-8q-Ml3" kind="relationship" relationship="detailViewController" id="Nf8-CN-hQS"/>
@@ -55,6 +55,13 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </activityIndicatorView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No photo selected" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CRE-BO-NH2">
+                                <rect key="frame" x="215" y="488" width="339" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -63,6 +70,8 @@
                             <constraint firstItem="0J3-Ic-4BM" firstAttribute="leading" secondItem="bP4-hU-7ta" secondAttribute="leading" id="KTw-ww-qD4"/>
                             <constraint firstAttribute="trailing" secondItem="0J3-Ic-4BM" secondAttribute="trailing" id="Vpv-WG-RfN"/>
                             <constraint firstItem="0J3-Ic-4BM" firstAttribute="top" secondItem="bP4-hU-7ta" secondAttribute="top" id="bDr-rk-eDs"/>
+                            <constraint firstAttribute="centerX" secondItem="CRE-BO-NH2" secondAttribute="centerX" id="iHl-Gs-5M4"/>
+                            <constraint firstAttribute="centerY" secondItem="CRE-BO-NH2" secondAttribute="centerY" id="iRh-bx-gi9"/>
                             <constraint firstAttribute="centerY" secondItem="cl9-Hc-Yhl" secondAttribute="centerY" id="jPg-OS-0Af"/>
                             <constraint firstAttribute="centerY" secondItem="0J3-Ic-4BM" secondAttribute="centerY" id="t5G-2Y-NZm"/>
                         </constraints>
@@ -70,6 +79,7 @@
                     <navigationItem key="navigationItem" id="5xC-y6-ebb"/>
                     <connections>
                         <outlet property="activityIndicator" destination="cl9-Hc-Yhl" id="noG-gG-Y1T"/>
+                        <outlet property="noPhotoLabel" destination="CRE-BO-NH2" id="yuw-dE-W5s"/>
                         <outlet property="scrollView" destination="0J3-Ic-4BM" id="SJB-bf-WZh"/>
                     </connections>
                 </viewController>
@@ -200,10 +210,10 @@
             </objects>
             <point key="canvasLocation" x="221" y="267"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Tab Bar View Controller-->
         <scene sceneID="6ZY-Jx-5UR">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="tSV-xl-2ng" sceneMemberID="viewController">
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="tSV-xl-2ng" customClass="TabBarViewController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" translucent="NO" id="JS8-Mc-XgY">

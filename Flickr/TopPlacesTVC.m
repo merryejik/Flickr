@@ -16,6 +16,12 @@
 
 @implementation TopPlacesTVC
 
+-(void)awakeFromNib
+{
+    [super awakeFromNib];
+    self.title = @"Top places";
+}
+
 -(NSURL *)accordingFlickrURL
 {
     return [FlickrFetcher URLforTopPlaces];
@@ -30,7 +36,6 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    self.title = @"Top places";
 }
 
 -(void)useFlickrData:(NSDictionary *)flickrData
@@ -42,8 +47,11 @@
 -(void)setPlaces:(NSArray *)places
 {
     _places = places;
-    [self parsePlacesByCountries];
-    [self.tableView reloadData];
+    if (self.managedContext)
+    {
+        [self parsePlacesByCountries];
+        [self.tableView reloadData];
+    }
 }
 
 

@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (strong, nonatomic) UIImageView *imageView;
 @property (strong, nonatomic) UIImage *image;
+@property (weak, nonatomic) IBOutlet UILabel *noPhotoLabel;
 @property (nonatomic) BOOL stopZooming;
 @property (retain, nonatomic) UIPopoverController *popover;
 @end
@@ -43,6 +44,7 @@
 
 -(void)setImage:(UIImage *)image
 {
+    self.noPhotoLabel.hidden = YES;
     self.imageView.image = image;
     
     if (image)
@@ -77,10 +79,10 @@
 
 - (void)scaleToFillFreeSpace
 {
-    if (!self.stopZooming)
+    if (self.image && !self.stopZooming)
     {
-        float wScale = self.imageView.frame.size.width/self.view.bounds.size.width;
-        float hScale = self.imageView.frame.size.height/self.view.bounds.size.height;
+        float wScale = self.image.size.width/self.view.bounds.size.width;
+        float hScale = self.image.size.height/self.view.bounds.size.height;
         self.scrollView.zoomScale = MAX(wScale, hScale);
     }
 }
@@ -155,7 +157,7 @@
 
 -(void)awakeFromNib
 {
-    self.splitViewController.delegate = self;
+   //self.splitViewController.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning
@@ -201,8 +203,9 @@
     }
 }
 
--(void)dealloc
-{
-    self.popover = nil;
-}
+//-(void)dealloc
+//{
+//    [super dealloc];
+//    self.popover = nil;
+//}
 @end

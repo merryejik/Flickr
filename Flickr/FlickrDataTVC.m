@@ -18,6 +18,7 @@
     [self loadDataFromFlicker: self.accordingFlickrURL];
 }
 
+
 -(void)awakeFromNib
 {
     [[NSNotificationCenter defaultCenter] addObserverForName:DatabaseAvailabilityNotification object:nil queue:nil usingBlock:^(NSNotification *notification)
